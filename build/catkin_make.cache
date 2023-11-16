@@ -1,0 +1,2 @@
+itri
+-DCATKIN_DEVEL_PREFIX=/home/itri/fusion_nms/devel -DCMAKE_INSTALL_PREFIX=/home/itri/fusion_nms/install -G Unix Makefiles

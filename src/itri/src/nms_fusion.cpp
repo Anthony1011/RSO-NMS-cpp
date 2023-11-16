@@ -80,9 +80,9 @@ std::vector<std::vector<float>>& sync_camera_objects_confidence)
 
 int main(){
 
-    std::vector<std::vector<sensor_msgs::RegionOfInterest>> sync_camera_objects(5, std::vector<sensor_msgs::RegionOfInterest>(5));
-    std::vector<std::vector<int>> sync_camera_objects_classid(5,std::vector<int>(5));
-    std::vector<std::vector<float>> sync_camera_objects_confidence(5,std::vector<float>(5));
+    std::vector<std::vector<sensor_msgs::RegionOfInterest>> sync_camera_objects(3, std::vector<sensor_msgs::RegionOfInterest>(10));
+    std::vector<std::vector<int>> sync_camera_objects_classid(3,std::vector<int>(10));
+    std::vector<std::vector<float>> sync_camera_objects_confidence(3,std::vector<float>(10));
 
     std::vector<int> class_id = {1,2,3};
     // random 
@@ -90,8 +90,10 @@ int main(){
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(0, class_id.size() - 1);
 
-    for (int frame = 0; frame < 5; ++frame) {
-        for (int i = 0; i < 5; ++i) {
+    for (int frame = 0; frame < sync_camera_objects.size(); ++frame) 
+    {
+
+        for (int i = 0; i < sync_camera_objects[frame].size(); ++i) {
 
             int rand_id = distrib(gen);
             int e = class_id[rand_id];
@@ -100,6 +102,7 @@ int main(){
             sync_camera_objects[frame][i].y_offset = i * 10;
             sync_camera_objects[frame][i].width = 100; 
             sync_camera_objects[frame][i].height = 100;
+            sync_camera_objects[frame][i].do_rectify = true;
             sync_camera_objects_classid[frame][i] = e;
             sync_camera_objects_confidence[frame][i] = i * 0.1 + 0.5;
         }
@@ -108,7 +111,7 @@ int main(){
     std::cout << "****Original Frame"<< std::endl;
     for (size_t frame = 0 ; frame < sync_camera_objects.size(); ++frame)
     {
-            std::cout << "Frame" << frame << std::endl;
+            std::cout << "**Frame" << frame << std::endl;
             for (size_t i = 0; i < sync_camera_objects[frame].size(); i++)
             {
                 std::cout << "Object " << i << ": (" 
@@ -129,7 +132,7 @@ int main(){
     std::cout << "****After NMS" <<std::endl;
     for (size_t frame = 0; frame < sync_camera_objects.size(); ++frame)
     {
-        std::cout << "Frame " << frame << ":\n";
+        std::cout << "**Frame " << frame << ":\n";
         for (size_t i = 0; i < sync_camera_objects[frame].size(); ++i)
         {
             std::cout << "Object " << i << ": (" 

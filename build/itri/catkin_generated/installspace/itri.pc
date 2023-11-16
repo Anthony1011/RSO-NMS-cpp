@@ -1,0 +1,8 @@
+prefix=/home/itri/fusion_nms/install
+
+Name: itri
+Description: Description of itri
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
